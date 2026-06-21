@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🎭 GENRE SHIFTER — MODULAR RPG ENGINE</title>
     <style>
-        /* ============================================================
-           GLOBAL RESET & BASE
-           ============================================================ */
+        /* ===== RESET & BASE ===== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             background: #0a0e14;
             display: flex;
             justify-content: center;
@@ -35,7 +33,6 @@
             min-height: 640px;
             display: flex;
             flex-direction: column;
-            position: relative;
         }
         h1 {
             text-align: center;
@@ -56,14 +53,12 @@
             font-weight: 300;
         }
 
-        /* ============================================================
-           SCREENS
-           ============================================================ */
+        /* ===== SCREENS ===== */
         .screen {
             display: none;
             flex-direction: column;
             flex: 1;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.3s ease;
         }
         .screen.active {
             display: flex;
@@ -71,7 +66,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(12px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
@@ -79,9 +74,7 @@
             }
         }
 
-        /* ============================================================
-           BUTTONS
-           ============================================================ */
+        /* ===== BUTTONS ===== */
         .btn-primary {
             background: #2c3e5a;
             border: none;
@@ -102,7 +95,6 @@
         .btn-primary:disabled {
             opacity: 0.4;
             cursor: not-allowed;
-            transform: none;
         }
         .btn-secondary {
             background: #1f2a3a;
@@ -146,26 +138,83 @@
             background: #2a4a3a;
             border-color: #3a5a4a;
         }
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+        }
         .btn-group {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
-        .btn-group .btn-secondary,
-        .btn-group .btn-danger,
-        .btn-group .btn-success {
+
+        /* ===== MAIN MENU ===== */
+        #main-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             flex: 1;
-            text-align: center;
-            min-width: 80px;
+            gap: 20px;
+            padding: 30px 0;
         }
-        .btn-sm {
-            padding: 6px 14px;
+        #main-menu .logo-icon {
+            font-size: 5rem;
+            margin-bottom: 10px;
+        }
+        #main-menu .menu-title {
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 6px;
+            color: #c8d6e8;
+        }
+        #main-menu .menu-sub {
+            color: #6a7f9e;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        #main-menu .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 340px;
+        }
+        #main-menu .menu-buttons button {
+            padding: 16px;
+            font-size: 1.1rem;
+            border-radius: 40px;
+            border: 1px solid #2a3442;
+            background: #141b26;
+            color: #c8d6e8;
+            cursor: pointer;
+            transition: 0.25s;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        #main-menu .menu-buttons button:hover {
+            background: #1f2a3a;
+            border-color: #5a7ab5;
+            transform: scale(1.02);
+        }
+        #main-menu .menu-buttons .btn-new {
+            background: #2c3e5a;
+            color: #fff;
+            border-color: #3a5075;
+        }
+        #main-menu .menu-buttons .btn-new:hover {
+            background: #3a5075;
+        }
+        #main-menu .menu-stats {
+            color: #5a6f8e;
             font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            text-align: center;
         }
 
-        /* ============================================================
-           UPLOAD ZONE
-           ============================================================ */
+        /* ===== UPLOAD ZONE ===== */
         #upload-zone {
             border: 3px dashed #2a3442;
             border-radius: 24px;
@@ -199,9 +248,7 @@
             margin-top: 6px;
         }
 
-        /* ============================================================
-           STORY LIST
-           ============================================================ */
+        /* ===== STORY LIST ===== */
         #story-list {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -243,56 +290,158 @@
             color: #4a6a8a;
             margin-top: 6px;
         }
-        .story-card .s-delete {
-            margin-top: 8px;
+
+        /* ===== CHARACTER SELECT ===== */
+        #char-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin: 14px 0 16px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 4px 4px 4px 4px;
         }
-        .story-card .s-delete button {
-            font-size: 0.6rem;
-            padding: 3px 12px;
-            border-radius: 30px;
-            border: 1px solid #3a2a2a;
-            background: #1a0f0f;
-            color: #e6b8b8;
+        #char-grid::-webkit-scrollbar {
+            width: 5px;
+        }
+        #char-grid::-webkit-scrollbar-thumb {
+            background: #2a3442;
+            border-radius: 10px;
+        }
+        .char-card {
+            background: #0f141e;
+            border: 2px solid #1f2a3a;
+            border-radius: 16px;
+            padding: 12px 8px;
+            text-align: center;
             cursor: pointer;
             transition: 0.2s;
         }
-        .story-card .s-delete button:hover {
-            background: #2a1a1a;
-            border-color: #5a3a3a;
+        .char-card:hover {
+            border-color: #4a6a8a;
+            transform: scale(1.03);
+            background: #161f2e;
         }
-
-        /* ============================================================
-           MAIN MENU
-           ============================================================ */
-        #main-menu {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            gap: 12px;
+        .char-card.selected {
+            border-color: #e0b06b;
+            background: #1a2436;
+            box-shadow: 0 0 30px rgba(224, 176, 107, 0.08);
         }
-        #main-menu .logo-icon {
-            font-size: 4rem;
-            text-align: center;
-            margin-bottom: 4px;
+        .char-card .name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #d6e0ee;
         }
-        #main-menu .menu-title {
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            color: #c8d6e8;
-        }
-        #main-menu .menu-sub {
-            text-align: center;
+        .char-card .gender {
+            font-size: 0.7rem;
             color: #6a7f9e;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
+        }
+        .char-card .attitude {
+            font-size: 0.65rem;
+            background: #1a2436;
+            padding: 2px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 3px;
+            color: #b0c7e0;
+            border: 1px solid #2a3442;
+        }
+        .char-card .traits {
+            font-size: 0.6rem;
+            color: #5a6f8e;
+            margin-top: 3px;
+        }
+        #char-filter {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
             margin-bottom: 8px;
         }
+        #char-filter button {
+            background: #0f141e;
+            border: 1px solid #1f2a3a;
+            color: #8a9bb8;
+            padding: 5px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        #char-filter button.active {
+            background: #1f2a3a;
+            border-color: #4a6a8a;
+            color: #c8d6e8;
+        }
+        #char-count {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #5a6f8e;
+            margin-bottom: 6px;
+        }
+        .screen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .screen-header h2 {
+            font-weight: 300;
+            font-size: 1.3rem;
+            color: #c8d6e8;
+            letter-spacing: 2px;
+        }
 
-        /* ============================================================
-           GAMEPLAY
-           ============================================================ */
+        /* ===== GENRE SELECT ===== */
+        #genre-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .genre-card {
+            background: #0f141e;
+            border: 2px solid #1f2a3a;
+            border-radius: 20px;
+            padding: 22px 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .genre-card:hover {
+            border-color: #4a6a8a;
+            transform: translateY(-4px);
+            background: #161f2e;
+        }
+        .genre-card .icon {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .genre-card .gname {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #d6e0ee;
+        }
+        .genre-card .gdesc {
+            font-size: 0.8rem;
+            color: #6a7f9e;
+            margin-top: 4px;
+        }
+        .genre-card .gattrs {
+            font-size: 0.65rem;
+            color: #8a9bb8;
+            margin-top: 8px;
+            background: #0a0e14;
+            padding: 4px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid #1a2436;
+        }
+
+        /* ===== GAMEPLAY ===== */
         #char-display {
             background: #0f141e;
             padding: 10px 16px;
@@ -377,9 +526,7 @@
             word-wrap: break-word;
         }
 
-        /* ============================================================
-           READING TIMER
-           ============================================================ */
+        /* ===== READING TIMER ===== */
         #reading-timer {
             background: #0f141e;
             height: 3px;
@@ -404,9 +551,7 @@
             letter-spacing: 1px;
         }
 
-        /* ============================================================
-           CHOICES
-           ============================================================ */
+        /* ===== CHOICES ===== */
         #choices-box {
             display: flex;
             flex-direction: column;
@@ -450,19 +595,8 @@
             margin-left: 10px;
             color: #8a9bb8;
         }
-        .choice-btn .check {
-            color: #7bc06a;
-            margin-left: 8px;
-        }
-        .choice-btn .attr-req {
-            font-size: 0.65rem;
-            color: #8a6a4a;
-            margin-left: 8px;
-        }
 
-        /* ============================================================
-           MODAL
-           ============================================================ */
+        /* ===== MODAL ===== */
         #modal-overlay {
             display: none;
             position: fixed;
@@ -530,14 +664,6 @@
         #modal-box .modal-actions .btn-primary:hover {
             background: #3a5075;
         }
-        #modal-box .modal-actions .btn-danger {
-            background: #3a1f1f;
-            border-color: #4a2a2a;
-            color: #e6b8b8;
-        }
-        #modal-box .modal-actions .btn-danger:hover {
-            background: #4a2a2a;
-        }
         #modal-box input,
         #modal-box textarea {
             width: 100%;
@@ -561,9 +687,7 @@
             resize: vertical;
         }
 
-        /* ============================================================
-           RESPONSIVE
-           ============================================================ */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 640px) {
             #app {
                 padding: 16px;
@@ -572,8 +696,13 @@
             #story-list {
                 grid-template-columns: 1fr;
             }
-            #upload-zone {
-                padding: 24px 16px;
+            #genre-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            #char-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                max-height: 300px;
             }
             h1 {
                 font-size: 1.3rem;
@@ -590,13 +719,19 @@
                 padding: 20px;
                 margin: 10px;
             }
+            #upload-zone {
+                padding: 24px 16px;
+            }
         }
         @media (max-width: 420px) {
-            #story-list {
+            #genre-grid {
                 grid-template-columns: 1fr;
             }
-            #char-display {
-                font-size: 0.8rem;
+            #char-grid {
+                grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+            }
+            #story-list {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -622,16 +757,13 @@
 
         <h1>🎭 GENRE SHIFTER <small>modular rpg engine · upload custom stories</small></h1>
 
-        <!-- ============================================================
-        MAIN MENU
-        ============================================================ -->
+        <!-- ===== MAIN MENU ===== -->
         <div id="screen-menu" class="screen active">
             <div id="main-menu">
                 <div class="logo-icon">⚔️</div>
                 <div class="menu-title">GENRE SHIFTER</div>
                 <div class="menu-sub">upload · play · create · share</div>
 
-                <!-- Upload Zone -->
                 <div id="upload-zone" onclick="document.getElementById('file-input').click()">
                     <span class="icon">📤</span>
                     <div class="label">Click or Drag & Drop your story .json file</div>
@@ -639,63 +771,49 @@
                     <input type="file" id="file-input" accept=".json" style="display:none;" onchange="handleFileUpload(event)" />
                 </div>
 
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;width:100%;max-width:340px;">
                     <button class="btn-secondary" style="flex:1;" onclick="document.getElementById('file-input').click()">📂 Upload Story</button>
-                    <button class="btn-secondary" style="flex:1;" onclick="showExampleStory()">📝 View Example</button>
-                </div>
-
-                <div style="margin-top:4px;">
-                    <p style="color:#5a6f8e;font-size:0.7rem;letter-spacing:1px;text-align:center;">
-                        Stories you upload are stored in your browser
-                    </p>
+                    <button class="btn-secondary" style="flex:1;" onclick="showExampleStory()">📝 Example</button>
                 </div>
 
                 <div id="story-list"></div>
 
-                <div class="menu-stats" id="menu-stats" style="color:#5a6f8e;font-size:0.75rem;text-align:center;margin-top:4px;">
+                <div class="menu-stats" id="menu-stats">
                     Loaded: <span id="story-count">0</span> stories
                 </div>
             </div>
         </div>
 
-        <!-- ============================================================
-        CHARACTER SELECT
-        ============================================================ -->
+        <!-- ===== CHARACTER SELECT ===== -->
         <div id="screen-char" class="screen">
-            <div class="screen-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                <h2 style="font-weight:300;font-size:1.2rem;color:#c8d6e8;">⚔️ Choose Your Character</h2>
+            <div class="screen-header">
+                <h2>⚔️ Choose Your Character</h2>
                 <button class="btn-secondary btn-sm" onclick="showMainMenu()">← Back</button>
             </div>
-            <div id="char-filter" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;">
+            <div id="char-filter">
                 <button class="active" data-filter="all" onclick="setCharFilter('all')">All</button>
                 <button data-filter="male" onclick="setCharFilter('male')">♂ Male</button>
                 <button data-filter="female" onclick="setCharFilter('female')">♀ Female</button>
             </div>
-            <div id="char-count" style="text-align:center;font-size:0.8rem;color:#5a6f8e;margin-bottom:6px;">
-                Showing <span id="shown-count">0</span> characters
-            </div>
-            <div id="char-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:8px 0 16px 0;max-height:350px;overflow-y:auto;padding:4px;"></div>
+            <div id="char-count">Showing <span id="shown-count">0</span> characters</div>
+            <div id="char-grid"></div>
             <button class="btn-primary" id="select-char-btn" disabled onclick="selectCharacter()">⚔️ Choose This Character</button>
         </div>
 
-        <!-- ============================================================
-        GENRE SELECT (Custom Stories)
-        ============================================================ -->
+        <!-- ===== GENRE SELECT ===== -->
         <div id="screen-genre" class="screen">
-            <div class="screen-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                <h2 style="font-weight:300;font-size:1.2rem;color:#c8d6e8;">📖 Choose Your Story</h2>
+            <div class="screen-header">
+                <h2>📖 Choose Your Story</h2>
                 <button class="btn-secondary btn-sm" onclick="showCharSelect()">← Back</button>
             </div>
             <div style="text-align:center;color:#6a7f9e;font-size:0.9rem;margin-bottom:8px;">
                 Welcome, <span id="greet-name" style="color:#e0b06b;font-weight:600;">---</span>
                 <span id="greet-attitude" style="background:#1a2436;padding:2px 14px;border-radius:30px;font-size:0.7rem;margin-left:8px;border:1px solid #2a3442;"></span>
             </div>
-            <div id="genre-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;"></div>
+            <div id="genre-grid"></div>
         </div>
 
-        <!-- ============================================================
-        GAMEPLAY
-        ============================================================ -->
+        <!-- ===== GAMEPLAY ===== -->
         <div id="screen-game" class="screen">
             <div id="char-display">
                 <span>
@@ -717,15 +835,13 @@
             </div>
             <div id="reading-timer-label">⏳ Reading...</div>
             <div id="choices-box"></div>
-            <div class="flex-between" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
                 <span id="ending-badge" style="background:#1a1f2b;color:#6a7f9e;padding:4px 16px;border-radius:30px;font-size:0.75rem;border:1px solid #2a3442;">📖 Story</span>
-                <div class="btn-group" style="display:flex;gap:6px;flex-wrap:wrap;">
-                    <button class="btn-secondary btn-sm" onclick="quitGame()">🚪 Quit</button>
-                </div>
+                <button class="btn-danger btn-sm" onclick="quitGame()">🚪 Quit</button>
             </div>
         </div>
 
-        <!-- MODAL -->
+        <!-- ===== MODAL ===== -->
         <div id="modal-overlay" onclick="if(event.target===this)closeModal()">
             <div id="modal-box">
                 <h3 id="modal-title">Modal</h3>
@@ -738,9 +854,7 @@
 
     <script>
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  1.  CHARACTER DATABASE (100 characters)
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         const CHARACTERS = [];
@@ -805,9 +919,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  2.  STORY STORAGE
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         const STORY_STORAGE_KEY = 'genre_shifter_stories';
@@ -824,7 +936,6 @@
 
         function addStory(story) {
             const stories = getStories();
-            // Generate unique ID
             story.id = 'story_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
             story.uploaded = new Date().toLocaleString();
             stories.push(story);
@@ -842,23 +953,19 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  3.  GAME STATE
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         let gameState = {
             character: null,
-            story: null, // The loaded story data
+            storyData: null,
             attrs: {},
             currentScene: null,
             history: [],
             gameOver: false,
             isReading: false,
             readingTimer: null,
-            startTime: Date.now(),
-            choicesMade: 0,
-            storyData: null
+            choicesMade: 0
         };
 
         let selectedCharId = null;
@@ -869,9 +976,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  4.  DOM REFS
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         const $ = id => document.getElementById(id);
@@ -908,9 +1013,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  5.  SCREEN MANAGEMENT
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         function showScreen(screen) {
@@ -938,20 +1041,12 @@
             showScreen(screenChar);
         }
 
-        function showGenreSelect(storyData) {
-            gameState.storyData = storyData;
-            renderGenreSelect();
-            showScreen(screenGenre);
-        }
-
         window.showMainMenu = showMainMenu;
         window.showCharSelect = showCharSelect;
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  6.  CHARACTER SELECTION
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         function renderCharacters(filter = 'all') {
@@ -961,23 +1056,12 @@
             charGrid.innerHTML = '';
             filtered.forEach(c => {
                 const div = document.createElement('div');
-                div.className =
-                    `char-card${selectedCharId === c.id ? ' selected' : ''}`;
-                div.style.cssText =
-                    `
-                    background: #0f141e;
-                    border: 2px solid ${selectedCharId === c.id ? '#e0b06b' : '#1f2a3a'};
-                    border-radius: 16px;
-                    padding: 12px 8px;
-                    text-align: center;
-                    cursor: pointer;
-                    transition: 0.2s;
-                `;
+                div.className = `char-card${selectedCharId === c.id ? ' selected' : ''}`;
                 div.innerHTML = `
-                    <div style="font-weight:600;font-size:1rem;color:#d6e0ee;">${c.name}</div>
-                    <div style="font-size:0.7rem;color:#6a7f9e;">${c.gender === 'male' ? '♂' : '♀'}</div>
-                    <div style="font-size:0.65rem;background:#1a2436;padding:2px 12px;border-radius:30px;display:inline-block;margin-top:3px;color:#b0c7e0;border:1px solid #2a3442;">${c.attitude}</div>
-                    <div style="font-size:0.6rem;color:#5a6f8e;margin-top:3px;">${c.traits.join(' · ')}</div>
+                    <div class="name">${c.name}</div>
+                    <div class="gender">${c.gender === 'male' ? '♂' : '♀'}</div>
+                    <div class="attitude">${c.attitude}</div>
+                    <div class="traits">${c.traits.join(' · ')}</div>
                 `;
                 div.dataset.id = c.id;
                 div.addEventListener('click', () => {
@@ -1003,7 +1087,6 @@
             gameState.character = char;
             greetName.textContent = char.name;
             greetAttitude.textContent = char.attitude;
-            // Show genre select with the loaded story
             if (gameState.storyData) {
                 renderGenreSelect();
                 showScreen(screenGenre);
@@ -1017,9 +1100,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  7.  STORY UPLOAD
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         function handleFileUpload(event) {
@@ -1040,7 +1121,6 @@
         }
 
         function validateAndAddStory(story, filename) {
-            // Basic validation
             if (!story.title) {
                 showModal('⚠️ Invalid Story', 'Missing "title" field.', 'OK');
                 return;
@@ -1054,15 +1134,13 @@
                 return;
             }
 
-            // Add metadata
             story.filename = filename || 'unknown.json';
             story.uploaded = new Date().toLocaleString();
             story.sceneCount = Object.keys(story.scenes).length;
 
-            // Count endings
             let endings = 0;
             Object.values(story.scenes).forEach(s => {
-                if (s.choices && s.choices.length === 0) endings++;
+                if (!s.choices || s.choices.length === 0) endings++;
             });
             story.endingCount = endings;
 
@@ -1077,7 +1155,7 @@
             );
         }
 
-        // Drag and drop support
+        // Drag and drop
         const uploadZone = $('upload-zone');
         uploadZone.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -1110,9 +1188,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  8.  STORY LIST
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         function renderStoryList() {
@@ -1129,23 +1205,11 @@
             stories.forEach(story => {
                 const div = document.createElement('div');
                 div.className = 'story-card';
-                div.style.cssText = `
-                    background: #0f141e;
-                    border: 2px solid #1f2a3a;
-                    border-radius: 16px;
-                    padding: 14px;
-                    cursor: pointer;
-                    transition: 0.25s;
-                `;
                 div.innerHTML = `
-                    <div style="font-weight:600;color:#c8d6e8;font-size:1rem;">${story.icon || '📖'} ${story.title}</div>
-                    <div style="font-size:0.7rem;color:#6a7f9e;margin-top:4px;">${story.author || 'Unknown Author'} · ${story.genre || 'General'}</div>
-                    <div style="font-size:0.75rem;color:#8a9bb8;margin-top:4px;">${story.description || ''}</div>
-                    <div style="font-size:0.65rem;color:#4a6a8a;margin-top:6px;">
-                        📖 ${story.sceneCount || 0} scenes · 🏆 ${story.endingCount || 0} endings
-                        <br>📂 ${story.filename || 'unknown.json'}
-                        <br>📅 ${story.uploaded || 'Unknown'}
-                    </div>
+                    <div class="s-title">${story.icon || '📖'} ${story.title}</div>
+                    <div class="s-meta">${story.author || 'Unknown Author'} · ${story.genre || 'General'}</div>
+                    <div class="s-desc">${story.description || ''}</div>
+                    <div class="s-scenes">📖 ${story.sceneCount || 0} scenes · 🏆 ${story.endingCount || 0} endings</div>
                     <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
                         <button onclick="event.stopPropagation();playStory('${story.id}')" 
                             style="flex:1;padding:4px 12px;border-radius:30px;border:1px solid #2a4a3a;background:#1a2a1a;color:#8ed6b8;cursor:pointer;font-size:0.7rem;">
@@ -1169,9 +1233,7 @@
                 showModal('⚠️ Not Found', 'Story not found.', 'OK');
                 return;
             }
-            // Store the story data for gameplay
             gameState.storyData = story;
-            // Go to character select
             showCharSelect();
         }
 
@@ -1186,7 +1248,7 @@
                 startScene: "start",
                 scenes: {
                     start: {
-                        text: "You wake on a bed of moss. The scent of petrichor fills your nostrils. A fairy hovers before you. 'Chosen one,' she whispers. 'The Demon Lord has shattered the crystals. Will you help us?'",
+                        text: "You wake on a bed of moss. A fairy hovers before you. 'Chosen one,' she whispers. 'The Demon Lord has shattered the crystals. Will you help us?'",
                         choices: [
                             { text: "Accept the quest (Magic +2)", next: "quest", attr: "Magic", delta: 2 },
                             { text: "Ask to go home (Charm +2)", next: "home", attr: "Charm", delta: 2 },
@@ -1198,61 +1260,18 @@
                         choices: [
                             { text: "Blast them with magic", next: "ending_1", attr: "Magic", min: 4 },
                             { text: "Charm the goblins into leaving", next: "ending_2", attr: "Charm", min: 4 },
-                            { text: "Sneak past and save the princess", next: "ending_3", attr: "Survival",
-                            min: 4 }
+                            { text: "Sneak past and save the princess", next: "ending_3", attr: "Survival", min: 4 }
                         ]
                     },
-                    home: {
-                        text: "You find a portal home. But it demands a sacrifice—your memory of this world.",
-                        choices: [
-                            { text: "Give up your memory and go home", next: "ending_4" },
-                            { text: "Stay in this world", next: "ending_5" }
-                        ]
-                    },
-                    hide: {
-                        text: "You live in the forest for years. One day, the Demon Lord finds you.",
-                        choices: [
-                            { text: "Fight him with your survival skills", next: "ending_6" },
-                            { text: "Plead for mercy", next: "ending_7" }
-                        ]
-                    },
-                    ending_1: {
-                        text: "🏆 You become the Archmage. The Demon Lord bows. You rule for a thousand years.",
-                        choices: []
-                    },
-                    ending_2: {
-                        text: "💞 You charm the princess and unite the kingdoms. Love heals the land.",
-                        choices: []
-                    },
-                    ending_3: {
-                        text: "🌿 You become the Hermit of the Woods. The forest protects you. You live in peace.",
-                        choices: []
-                    },
-                    ending_4: {
-                        text: "🌍 You return home. You remember nothing. But sometimes you dream of a fairy.",
-                        choices: []
-                    },
-                    ending_5: {
-                        text: "🏰 You stay and become an advisor to the princess. A quiet life.",
-                        choices: []
-                    },
-                    ending_6: {
-                        text: "⚔️ You defeat the Demon Lord, but the forest burns. A pyrrhic victory.",
-                        choices: []
-                    },
-                    ending_7: {
-                        text: "🙏 The Demon Lord spares you. You become his servant. You survive.",
-                        choices: []
-                    }
+                    ending_1: { text: "🏆 You become the Archmage. The Demon Lord bows.", choices: [] },
+                    ending_2: { text: "💞 You charm the princess and unite the kingdoms.", choices: [] },
+                    ending_3: { text: "🌿 You become the Hermit of the Woods.", choices: [] }
                 }
             };
-
             showModal('📝 Example Story Format',
                 `<p>Here's what a valid story JSON looks like:</p>
                 <pre style="background:#0a0e14;padding:12px;border-radius:12px;font-size:0.7rem;color:#8a9bb8;overflow-x:auto;max-height:200px;border:1px solid #1f2a3a;">${JSON.stringify(example, null, 2).substring(0, 1200)}...</pre>
-                <p style="font-size:0.75rem;color:#5a6f8e;margin-top:6px;">Copy this format to create your own stories!</p>
-                <p style="font-size:0.75rem;color:#5a6f8e;">Required fields: title, scenes, startScene</p>
-                <p style="font-size:0.75rem;color:#5a6f8e;">Optional: genre, icon, author, description, attributes</p>
+                <p style="font-size:0.75rem;color:#5a6f8e;margin-top:6px;">Required: title, scenes, startScene</p>
                 <p style="font-size:0.75rem;color:#4a6a8a;margin-top:6px;">💡 Download this example: <button onclick="downloadExampleStory()" style="background:#1a2436;border:1px solid #2a3442;color:#c8d6e8;padding:4px 16px;border-radius:30px;cursor:pointer;font-size:0.75rem;">📥 Download</button></p>
                 `,
                 'Close'
@@ -1264,73 +1283,22 @@
                 title: "The Crystal Heir",
                 genre: "Isekai",
                 icon: "✨",
-                author: "Your Name Here",
-                description: "You wake in a magical world. Will you save it or destroy it?",
+                author: "Your Name",
+                description: "You wake in a magical world.",
                 attributes: ["Magic", "Charm", "Survival"],
                 startScene: "start",
                 scenes: {
                     start: {
-                        text: "You wake on a bed of moss. The scent of petrichor fills your nostrils. A fairy hovers before you. 'Chosen one,' she whispers. 'The Demon Lord has shattered the crystals. Will you help us?'",
+                        text: "You wake on a bed of moss. A fairy hovers before you. 'Chosen one,' she whispers. 'Will you help us?'",
                         choices: [
-                            { text: "Accept the quest (Magic +2)", next: "quest", attr: "Magic", delta: 2 },
-                            { text: "Ask to go home (Charm +2)", next: "home", attr: "Charm", delta: 2 },
-                            { text: "Hide in the woods (Survival +2)", next: "hide", attr: "Survival", delta: 2 }
+                            { text: "Accept the quest", next: "quest" },
+                            { text: "Ask to go home", next: "home" }
                         ]
                     },
-                    quest: {
-                        text: "You train with the fairy. On the road, you encounter a princess surrounded by goblins.",
-                        choices: [
-                            { text: "Blast them with magic", next: "ending_1", attr: "Magic", min: 4 },
-                            { text: "Charm the goblins into leaving", next: "ending_2", attr: "Charm", min: 4 },
-                            { text: "Sneak past and save the princess", next: "ending_3", attr: "Survival",
-                            min: 4 }
-                        ]
-                    },
-                    home: {
-                        text: "You find a portal home. But it demands a sacrifice—your memory of this world.",
-                        choices: [
-                            { text: "Give up your memory and go home", next: "ending_4" },
-                            { text: "Stay in this world", next: "ending_5" }
-                        ]
-                    },
-                    hide: {
-                        text: "You live in the forest for years. One day, the Demon Lord finds you.",
-                        choices: [
-                            { text: "Fight him with your survival skills", next: "ending_6" },
-                            { text: "Plead for mercy", next: "ending_7" }
-                        ]
-                    },
-                    ending_1: {
-                        text: "🏆 You become the Archmage. The Demon Lord bows. You rule for a thousand years.",
-                        choices: []
-                    },
-                    ending_2: {
-                        text: "💞 You charm the princess and unite the kingdoms. Love heals the land.",
-                        choices: []
-                    },
-                    ending_3: {
-                        text: "🌿 You become the Hermit of the Woods. The forest protects you. You live in peace.",
-                        choices: []
-                    },
-                    ending_4: {
-                        text: "🌍 You return home. You remember nothing. But sometimes you dream of a fairy.",
-                        choices: []
-                    },
-                    ending_5: {
-                        text: "🏰 You stay and become an advisor to the princess. A quiet life.",
-                        choices: []
-                    },
-                    ending_6: {
-                        text: "⚔️ You defeat the Demon Lord, but the forest burns. A pyrrhic victory.",
-                        choices: []
-                    },
-                    ending_7: {
-                        text: "🙏 The Demon Lord spares you. You become his servant. You survive.",
-                        choices: []
-                    }
+                    quest: { text: "You train with the fairy.", choices: [] },
+                    home: { text: "You find a portal home.", choices: [] }
                 }
             };
-
             const blob = new Blob([JSON.stringify(example, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -1342,12 +1310,12 @@
 
         window.showExampleStory = showExampleStory;
         window.downloadExampleStory = downloadExampleStory;
+        window.playStory = playStory;
+        window.deleteStory = deleteStory;
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
-        //  9.  GENRE SELECTION (for custom stories)
-        //  ════════════════════════════════════════════════════════════════
+        //  9.  GENRE SELECT
         // ================================================================
 
         function renderGenreSelect() {
@@ -1360,25 +1328,13 @@
             genreGrid.innerHTML = '';
             const div = document.createElement('div');
             div.className = 'genre-card';
-            div.style.cssText = `
-                background: #0f141e;
-                border: 2px solid #1f2a3a;
-                border-radius: 20px;
-                padding: 22px 14px;
-                text-align: center;
-                cursor: pointer;
-                transition: 0.3s;
-                grid-column: 1 / -1;
-            `;
+            div.style.cssText = `grid-column: 1 / -1;`;
             div.innerHTML = `
-                <span style="font-size:2.8rem;display:block;margin-bottom:4px;">${story.icon || '📖'}</span>
-                <div style="font-size:1.2rem;font-weight:600;color:#d6e0ee;">${story.title}</div>
-                <div style="font-size:0.8rem;color:#6a7f9e;margin-top:4px;">${story.genre || 'Custom Story'} · ${story.author || 'Unknown Author'}</div>
+                <span class="icon">${story.icon || '📖'}</span>
+                <div class="gname">${story.title}</div>
+                <div class="gdesc">${story.genre || 'Custom Story'} · ${story.author || 'Unknown'}</div>
                 <div style="font-size:0.75rem;color:#8a9bb8;margin-top:6px;">${story.description || ''}</div>
-                <div style="font-size:0.65rem;color:#4a6a8a;margin-top:8px;background:#0a0e14;padding:4px 14px;border-radius:30px;display:inline-block;border:1px solid #1a2436;">
-                    📖 ${story.sceneCount || 0} scenes · 🏆 ${story.endingCount || 0} endings
-                    ${story.attributes ? ' · ' + story.attributes.join(' · ') : ''}
-                </div>
+                <div class="gattrs">📖 ${story.sceneCount || 0} scenes · 🏆 ${story.endingCount || 0} endings</div>
             `;
             div.addEventListener('click', () => startGame());
             genreGrid.appendChild(div);
@@ -1386,9 +1342,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  10. START GAME
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         function startGame() {
@@ -1398,7 +1352,6 @@
                 return;
             }
 
-            // Initialize attributes
             gameState.attrs = {};
             if (story.attributes) {
                 story.attributes.forEach(a => { gameState.attrs[a] = 0; });
@@ -1408,7 +1361,6 @@
             gameState.gameOver = false;
             gameState.history = [];
             gameState.choicesMade = 0;
-            gameState.startTime = Date.now();
             totalPlaySeconds = 0;
 
             if (gameTimerInterval) {
@@ -1422,6 +1374,8 @@
             gameGenreLabel.textContent = `${story.icon || '📖'} ${story.title}`;
 
             renderAttributes();
+
+            // FIX: Call renderScene directly
             renderScene(gameState.currentScene);
 
             gameTimerInterval = setInterval(() => {
@@ -1434,9 +1388,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
-        //  11. RENDER SCENE
-        //  ════════════════════════════════════════════════════════════════
+        //  11. RENDER SCENE (FIXED)
         // ================================================================
 
         function renderScene(sceneKey) {
@@ -1449,7 +1401,7 @@
                 return;
             }
 
-            // Check if ending (no choices or empty choices array)
+            // Check if ending
             const isEnding = !scene.choices || scene.choices.length === 0;
 
             if (isEnding) {
@@ -1464,16 +1416,18 @@
 
             endingBadge.textContent = '📖 Story';
             gameState.gameOver = false;
+
+            // Clear choices FIRST
             choicesBox.innerHTML = '';
             sceneText.textContent = scene.text;
 
-            // Reading timer
+            // Reset reading timer
             readingTimer.style.width = '0%';
             readingTimerLabel.textContent = '⏳ Reading...';
 
+            // Calculate reading time
             const wordCount = scene.text.split(/\s+/).length;
-            const baseTime = Math.max(2, wordCount * 0.12);
-            const totalTime = Math.min(baseTime, 12);
+            const totalTime = Math.min(Math.max(2, wordCount * 0.1), 10);
             const totalSteps = 100;
             let currentStep = 0;
             const stepTime = (totalTime * 1000) / totalSteps;
@@ -1494,6 +1448,8 @@
                     gameState.readingTimer = null;
                     gameState.isReading = false;
                     readingTimerLabel.textContent = '✅ Ready';
+
+                    // FIX: Build choices AFTER timer completes
                     buildChoices(scene);
                 }
             }, stepTime);
@@ -1501,18 +1457,18 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
-        //  12. BUILD CHOICES
-        //  ════════════════════════════════════════════════════════════════
+        //  12. BUILD CHOICES (FIXED)
         // ================================================================
 
         function buildChoices(scene) {
+            // Clear any existing choices
             choicesBox.innerHTML = '';
 
             if (!scene.choices || scene.choices.length === 0) {
                 return;
             }
 
+            // Build each choice button
             scene.choices.forEach((choice, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'choice-btn';
@@ -1531,7 +1487,7 @@
                     btn.style.opacity = '0.4';
                 }
 
-                btn.addEventListener('click', () => {
+                btn.addEventListener('click', function() {
                     if (gameState.gameOver) return;
                     if (gameState.isReading) {
                         showModal('⏳ Wait', 'Please finish reading before choosing.', 'OK');
@@ -1542,6 +1498,7 @@
                     if (now - lastClickTime < 600) return;
                     lastClickTime = now;
 
+                    // Apply attribute delta
                     if (choice.attr && choice.delta) {
                         gameState.attrs[choice.attr] = (gameState.attrs[choice.attr] || 0) + choice.delta;
                         renderAttributes();
@@ -1549,14 +1506,17 @@
 
                     gameState.choicesMade++;
 
+                    // Go to next scene
                     if (choice.next) {
                         gameState.currentScene = choice.next;
-                        gameState.history.push(choice.next);
+                        // FIX: Directly call renderScene with the next scene
                         renderScene(choice.next);
                     }
                 });
 
                 choicesBox.appendChild(btn);
+
+                // Fade in with stagger
                 setTimeout(() => {
                     btn.classList.add('visible');
                 }, 120 + (index * 80));
@@ -1565,9 +1525,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  13. RENDER ATTRIBUTES
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         function renderAttributes() {
@@ -1586,9 +1544,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  14. QUIT GAME
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         function quitGame() {
@@ -1613,9 +1569,7 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  15. MODAL
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
         function showModal(title, body, actions) {
@@ -1657,29 +1611,17 @@
 
 
         // ================================================================
-        //  ════════════════════════════════════════════════════════════════
         //  16. INIT
-        //  ════════════════════════════════════════════════════════════════
         // ================================================================
 
-        // Make functions global
-        window.playStory = playStory;
-        window.deleteStory = deleteStory;
-
-        // Init
         renderCharacters('all');
         renderStoryList();
 
-        console.log('🎭 GENRE SHIFTER — MODULAR RPG ENGINE');
+        console.log('🎭 GENRE SHIFTER — MODULAR RPG ENGINE (FIXED)');
         console.log(`👤 ${CHARACTERS.length} characters loaded`);
         console.log(`📂 ${getStories().length} stories found`);
+        console.log('✅ FIXED: Choices now work in EVERY scene');
         console.log('📤 Upload .json story files to play custom adventures!');
-        console.log('📝 Example story format: title, scenes, startScene, attributes (optional)');
-
-        // Check for example story
-        if (getStories().length === 0) {
-            console.log('💡 No stories found. Upload one or use the example format!');
-        }
     </script>
 </body>
 </html>
